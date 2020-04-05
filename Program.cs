@@ -36,6 +36,7 @@ namespace Sorting
             int[] nums = read.ToArray();
 
             nums = Shell(nums);
+            //nums = Insertion(nums);
 
             stopwatch.Reset();
             stopwatch.Start();
