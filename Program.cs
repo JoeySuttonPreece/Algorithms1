@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Diagnostics;
 
 namespace Sorting
 {
@@ -8,9 +9,23 @@ namespace Sorting
     {
         static void Main(string[] args)
         {
+            Stopwatch stopwatch = new Stopwatch();
             List<int> read = new List<int> { };
+            int[] wanted = new int[]
+            {
+                575154,
+                182339,
+                17132,
+                773788,
+                296934,
+                991395,
+                303270,
+                45231,
+                580,
+                629822
+            };
 
-            using (StreamReader reader = new StreamReader("D:\\OneDrive - Swinburne University\\Sem3\\Programming\\week6\\Sorting\\unsorted_numbers.csv"))
+            using (StreamReader reader = new StreamReader("D:\\Joey\\School\\Repos\\Algorithms1\\unsorted_numbers.csv"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -22,43 +37,35 @@ namespace Sorting
 
             nums = Shell(nums);
 
-            Console.WriteLine(Linear(nums, 575154));
-            Console.WriteLine(Binary(nums, 575154));
+            stopwatch.Reset();
+            stopwatch.Start();
 
-            Console.WriteLine(Linear(nums, 182339));
-            Console.WriteLine(Binary(nums, 182339));
+            for (int i = 0; i < 100000; i++)
+            {
+                foreach (int num in wanted)
+                {
+                    Linear(nums, num);
+                }
+            }
 
-            Console.WriteLine(Linear(nums, 17132));
-            Console.WriteLine(Binary(nums, 17132));
+            stopwatch.Stop();
+            long linear = stopwatch.ElapsedMilliseconds;
+            Console.WriteLine($"Linear x 1000000: {linear} ms");
 
-            Console.WriteLine(Linear(nums, 773788));
-            Console.WriteLine(Binary(nums, 773788));
+            stopwatch.Reset();
+            stopwatch.Start();
 
-            Console.WriteLine(Linear(nums, 296934));
-            Console.WriteLine(Binary(nums, 296934));
+            for (int i = 0; i < 100000; i++)
+            {
+                foreach (int num in wanted)
+                {
+                    Binary(nums, num);
+                }
+            }
 
-            Console.WriteLine(Linear(nums, 991395));
-            Console.WriteLine(Binary(nums, 991395));
-
-            Console.WriteLine(Linear(nums, 303270));
-            Console.WriteLine(Binary(nums, 303270));
-
-            Console.WriteLine(Linear(nums, 45231));
-            Console.WriteLine(Binary(nums, 45231));
-
-            Console.WriteLine(Linear(nums, 580));
-            Console.WriteLine(Binary(nums, 580));
-
-            Console.WriteLine(Linear(nums, 629822));
-            Console.WriteLine(Binary(nums, 629822));
-
-
-            Console.WriteLine(Linear(nums, 1));
-            Console.WriteLine(Binary(nums, 1));
-
-
-            //WriteList(Insertion(nums));
-            //WriteList(Shell(nums));
+            stopwatch.Stop();
+            long binary = stopwatch.ElapsedMilliseconds;
+            Console.WriteLine($"Binary x 1000000: {binary} ms");
         }
 
         static int[] Insertion(int[] list)
